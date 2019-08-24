@@ -1,3 +1,17 @@
+# Copyright 2019 Mycroft AI Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 """Unit tests for the SkillLoader class."""
 from time import time
 from unittest.mock import call, MagicMock, patch
@@ -64,8 +78,16 @@ class TestSkillLoader(MycroftUnitTestBase):
         """The loader should skip reloads for skill that doesn't allow it."""
         self.loader.instance = MagicMock()
         self.loader.instance.reload_skill = False
-        self.loader.active = False
+        self.loader.active = True
         self.loader.loaded = True
+        self.assertFalse(self.loader.reload_needed())
+
+    def test_skill_reloading_deactivated(self):
+        """The loader should skip reloads for skill that aren't active."""
+        self.loader.instance = MagicMock()
+        self.loader.instance.reload_skill = True
+        self.loader.active = False
+        self.loader.loaded = False
         self.assertFalse(self.loader.reload_needed())
 
     def test_skill_reload(self):
