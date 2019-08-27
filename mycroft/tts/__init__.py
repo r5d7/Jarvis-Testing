@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from copy import copy
 import hashlib
 import os
 import random
@@ -34,6 +35,10 @@ from mycroft.util import (
 )
 from mycroft.util.log import LOG
 from queue import Queue, Empty
+
+
+_TTS_ENV = copy(os.environ)
+_TTS_ENV['PULSE_PROP'] = 'media.role=phone'
 
 
 def send_playback_metric(stopwatch, ident):
@@ -91,9 +96,9 @@ class PlaybackThread(Thread):
                 stopwatch = Stopwatch()
                 with stopwatch:
                     if snd_type == 'wav':
-                        self.p = play_wav(data)
+                        self.p = play_wav(data, environment=_TTS_ENV)
                     elif snd_type == 'mp3':
-                        self.p = play_mp3(data)
+                        self.p = play_mp3(data, environment=_TTS_ENV)
 
                     if visemes:
                         self.show_visemes(visemes)
