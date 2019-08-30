@@ -223,7 +223,7 @@ class SkillLoader:
             self.instance.settings.load_skill_settings_from_file()
             self.instance.bind(self.bus)
             try:
-                self.instance.load_data_files(self.skill_directory)
+                self.instance.load_data_files()
                 # Set up intent handlers
                 # TODO: can this be a public method?
                 self.instance._register_decorated()
@@ -232,7 +232,7 @@ class SkillLoader:
             except Exception as e:
                 # If an exception occurs, make sure to clean up the skill
                 self.instance.default_shutdown()
-                self.instane = None
+                self.instance = None
                 log_msg = 'Skill initialization failed with {}'
                 LOG.exception(log_msg.format(repr(e)))
 
