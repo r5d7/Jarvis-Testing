@@ -129,8 +129,6 @@ class MycroftSkill:
         self.bind(bus)
         #: Mycroft global configuration. (dict)
         self.config_core = Configuration.get()
-        # TODO: 19.08 - Remove
-        self._config = self.config_core.get(self.name) or {}
         self.dialog_renderer = None
 
         #: Filesystem access to skill specific folder.
@@ -166,16 +164,6 @@ class MycroftSkill:
                       "from __init__() to initialize() to correct this.")
             LOG.error(simple_trace(traceback.format_stack()))
             raise Exception("Accessed MycroftSkill.bus in __init__")
-
-    @property
-    def config(self):
-        """Provide deprecation warning when accessing config.
-        TODO: Remove in 19.08
-        """
-        LOG.warning('self.config is deprecated.  Switch to using '
-                    'self.setting["whatever"] within your skill.')
-        LOG.warning(simple_trace(traceback.format_stack()))
-        return self._config
 
     @property
     def location(self):
@@ -243,7 +231,7 @@ class MycroftSkill:
         self.events.add('mycroft.paired', self.settings.run_poll)
 
     def detach(self):
-        for (name, intent) in self.intent_service.registered_intents:
+        for (name, _) in self.intent_service:
             name = '{}:{}'.format(self.skill_id, name)
             self.intent_service.detach_intent(name)
 
@@ -788,7 +776,8 @@ class MycroftSkill:
         if not filename:
             raise FileNotFoundError('Unable to find "{}"'.format(intent_file))
         self.intent_service.register_padatious_intent(name, filename)
-        self.add_event(name, handler, 'mycroft.skill.handler')
+        if handler:
+            self.add_event(name, handler, 'mycroft.skill.handler')
 
     def register_entity_file(self, entity_file):
         """Register an Entity file with the intent service.
@@ -820,7 +809,7 @@ class MycroftSkill:
         """Listener to enable a registered intent if it belongs to this skill.
         """
         intent_name = message.data["intent_name"]
-        for (name, intent) in self.intent_service.registered_intents:
+        for (name, _) in self.intent_service:
             if name == intent_name:
                 return self.enable_intent(intent_name)
 
@@ -828,7 +817,7 @@ class MycroftSkill:
         """Listener to disable a registered intent if it belongs to this skill.
         """
         intent_name = message.data["intent_name"]
-        for (name, intent) in self.intent_service.registered_intents:
+        for (name, _) in self.intent_service:
             if name == intent_name:
                 return self.disable_intent(intent_name)
 
