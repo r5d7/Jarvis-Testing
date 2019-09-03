@@ -84,7 +84,7 @@ def create_wrapper(handler, skill_id, on_start, on_end, on_error):
 class EventContainer:
     """Container tracking messagbus handlers.
 
-    This container tracks events added by a skill, allowing unregestering
+    This container tracks events added by a skill, allowing unregistering
     all events on shutdown.
     """
     def __init__(self, bus=None):
