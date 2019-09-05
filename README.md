@@ -1,6 +1,8 @@
+This repository is for testing out a mini install with a limited set of skills. Would like to rework the system to make it offline somehow. 
 
+Please support the origional project!  
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////[ Default README.md ]////////
+/////////////////////////////////////////////////////////////////////////////////////////[ Start Default README.md ]////////
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE.md) [![CLA](https://img.shields.io/badge/CLA%3F-Required-blue.svg)](https://mycroft.ai/cla) [![Team](https://img.shields.io/badge/Team-Mycroft_Core-violetblue.svg)](https://github.com/MycroftAI/contributors/blob/master/team/Mycroft%20Core.md) ![Status](https://img.shields.io/badge/-Production_ready-green.svg)
 
@@ -149,3 +151,5 @@ Join the [Mycroft Forum](https://community.mycroft.ai/) for questions and answer
 * [Mycroft Chat](https://chat.mycroft.ai)
 * [Mycroft Forum](https://community.mycroft.ai)
 * [Mycroft Blog](https://mycroft.ai/blog)
+
+///////////////////////////////////////////////////////////////////////////////////////////[ END Default README.md ]////////
